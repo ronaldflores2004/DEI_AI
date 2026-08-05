@@ -8,6 +8,10 @@ from app.analysis.api.analysis_router import (
     router as analysis_router,
 )
 
+from app.transcription.api.transcription_router import (
+    router as transcription_router,
+)
+
 configure_logging()
 
 app = FastAPI(
@@ -33,4 +37,8 @@ def root():
 
 app.include_router(
     analysis_router
+)
+
+app.include_router(
+    transcription_router
 )

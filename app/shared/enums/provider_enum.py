@@ -12,3 +12,7 @@ class ProviderEnum(str, Enum):
     LMSTUDIO = "LMSTUDIO"
 
     VLLM = "VLLM"
+
+    WHISPER = "WHISPER"
+
+    CLAUDE = "CLAUDE"

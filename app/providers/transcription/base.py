@@ -1,19 +1,19 @@
-from abc import (
-    ABC,
-    abstractmethod,
-)
+from abc import ABC
+from abc import abstractmethod
 
 
 class BaseTranscriptionProvider(ABC):
     """
-    Contrato para transcripción
-    de audio.
+    Contrato para cualquier proveedor
+    de transcripción.
     """
 
     @abstractmethod
     def transcribe(
         self,
         audio_path: str,
-    ) -> str:
-
+    ) -> dict:
+        """
+        Transcribe un archivo de audio.
+        """
         pass
