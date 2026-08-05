@@ -1,0 +1,44 @@
+from enum import Enum
+
+
+class EmotionEnum(str, Enum):
+
+    ALEGRIA = "ALEGRIA"
+
+    TRISTEZA = "TRISTEZA"
+
+    ANSIEDAD = "ANSIEDAD"
+
+    MIEDO = "MIEDO"
+
+    IRA = "IRA"
+
+    ASCO = "ASCO"
+
+    SORPRESA = "SORPRESA"
+
+    CALMA = "CALMA"
+
+    ESTRES = "ESTRES"
+
+    DESANIMO = "DESANIMO"
+
+    CULPA = "CULPA"
+
+    VERGUENZA = "VERGUENZA"
+
+    SOLEDAD = "SOLEDAD"
+
+    FRUSTRACION = "FRUSTRACION"
+
+    CONFUSION = "CONFUSION"
+
+    ESPERANZA = "ESPERANZA"
+
+    CONFIANZA = "CONFIANZA"
+
+    GRATITUD = "GRATITUD"
+
+    AGOTAMIENTO = "AGOTAMIENTO"
+
+    AMOR = "AMOR"
