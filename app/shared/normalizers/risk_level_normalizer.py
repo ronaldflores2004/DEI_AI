@@ -18,6 +18,8 @@ class RiskLevelNormalizer:
         "low": RiskLevelEnum.LOW,
         "bajo": RiskLevelEnum.LOW,
         "leve": RiskLevelEnum.LOW,
+        "ninguno": RiskLevelEnum.LOW,
+        "sin riesgo": RiskLevelEnum.LOW,
 
         "medium": RiskLevelEnum.MEDIUM,
         "medio": RiskLevelEnum.MEDIUM,
@@ -31,6 +33,8 @@ class RiskLevelNormalizer:
         "crítico": RiskLevelEnum.CRITICAL,
         "critico": RiskLevelEnum.CRITICAL,
         "muy alto": RiskLevelEnum.CRITICAL,
+        "inminente": RiskLevelEnum.CRITICAL,
+        "urgente": RiskLevelEnum.CRITICAL,
 
     }
 
