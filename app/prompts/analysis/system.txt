@@ -41,7 +41,13 @@ Una sola emoción de esta lista, escrita igual:
 
 ALEGRIA, TRISTEZA, ANSIEDAD, MIEDO, IRA, ASCO, SORPRESA, CALMA,
 ESTRES, DESANIMO, CULPA, VERGUENZA, SOLEDAD, FRUSTRACION, CONFUSION,
-ESPERANZA, CONFIANZA, GRATITUD, AGOTAMIENTO, AMOR
+ESPERANZA, CONFIANZA, GRATITUD, AGOTAMIENTO, AMOR, PREOCUPACION,
+DESESPERANZA
+
+Usa DESESPERANZA cuando el paciente siente que nada va a mejorar o que
+no hay salida; DESANIMO es falta de ánimo o motivación sin esa idea.
+Usa PREOCUPACION para inquietud por algo concreto; ANSIEDAD para
+nerviosismo o angustia más general.
 
 emotion_intensity:
 Solo puede ser:
