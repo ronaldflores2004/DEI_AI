@@ -1,79 +1,76 @@
+import logging
+import unicodedata
+
 from app.shared.enums.emotion_enum import (
     EmotionEnum,
 )
 
-import logging
-
 logger = logging.getLogger(__name__)
+
+
+def _key(
+    emotion: str,
+) -> str:
+    """
+    Minúsculas y sin tildes: "Estrés", "ESTRES"
+    y "estres" dan la misma clave.
+    """
+
+    emotion = unicodedata.normalize(
+        "NFKD",
+        emotion.strip().lower(),
+    )
+
+    return "".join(
+        char
+        for char in emotion
+        if not unicodedata.combining(char)
+    )
+
+
+# Sinónimos que el modelo suele devolver. Deben
+# coincidir con EMOTION_ALIASES del backend
+# (dei_backend/app/shared/emotions.py).
+EMOTION_ALIASES = {
+    "felicidad": EmotionEnum.ALEGRIA,
+    "contento": EmotionEnum.ALEGRIA,
+    "contenta": EmotionEnum.ALEGRIA,
+    "optimismo": EmotionEnum.ALEGRIA,
+    "melancolia": EmotionEnum.TRISTEZA,
+    "ansioso": EmotionEnum.ANSIEDAD,
+    "ansiosa": EmotionEnum.ANSIEDAD,
+    "terror": EmotionEnum.MIEDO,
+    "enojo": EmotionEnum.IRA,
+    "furia": EmotionEnum.IRA,
+    "rabia": EmotionEnum.IRA,
+    "tranquilidad": EmotionEnum.CALMA,
+    "abatimiento": EmotionEnum.DESANIMO,
+    "culpabilidad": EmotionEnum.CULPA,
+    "fatiga": EmotionEnum.AGOTAMIENTO,
+    "cansancio": EmotionEnum.AGOTAMIENTO,
+    "inquietud": EmotionEnum.PREOCUPACION,
+    "preocupado": EmotionEnum.PREOCUPACION,
+    "preocupada": EmotionEnum.PREOCUPACION,
+}
 
 
 class EmotionNormalizer:
     """
     Normaliza emociones detectadas
-    por la IA hacia el estándar
-    clínico utilizado por DEI.
+    por la IA hacia el catálogo
+    canónico de DEI (EmotionEnum).
     """
 
     _EMOTION_MAP = {
-
-        "alegría": EmotionEnum.ALEGRIA,
-        "felicidad": EmotionEnum.ALEGRIA,
-        "contento": EmotionEnum.ALEGRIA,
-        "optimismo": EmotionEnum.ALEGRIA,
-
-        "tristeza": EmotionEnum.TRISTEZA,
-        "melancolía": EmotionEnum.TRISTEZA,
-
-        "ansiedad": EmotionEnum.ANSIEDAD,
-        "ansioso": EmotionEnum.ANSIEDAD,
-
-        "miedo": EmotionEnum.MIEDO,
-        "terror": EmotionEnum.MIEDO,
-
-        "ira": EmotionEnum.IRA,
-        "enojo": EmotionEnum.IRA,
-        "furia": EmotionEnum.IRA,
-
-        "asco": EmotionEnum.ASCO,
-
-        "sorpresa": EmotionEnum.SORPRESA,
-
-        "calma": EmotionEnum.CALMA,
-        "tranquilidad": EmotionEnum.CALMA,
-
-        "estrés": EmotionEnum.ESTRES,
-        "estres": EmotionEnum.ESTRES,
-
-        "desánimo": EmotionEnum.DESANIMO,
-        "desanimo": EmotionEnum.DESANIMO,
-        "desesperanza": EmotionEnum.DESANIMO,
-        "abatimiento": EmotionEnum.DESANIMO,
-
-        "culpa": EmotionEnum.CULPA,
-        "culpabilidad": EmotionEnum.CULPA,
-
-        "vergüenza": EmotionEnum.VERGUENZA,
-        "verguenza": EmotionEnum.VERGUENZA,
-
-        "soledad": EmotionEnum.SOLEDAD,
-
-        "frustración": EmotionEnum.FRUSTRACION,
-        "frustracion": EmotionEnum.FRUSTRACION,
-
-        "confusión": EmotionEnum.CONFUSION,
-        "confusion": EmotionEnum.CONFUSION,
-
-        "esperanza": EmotionEnum.ESPERANZA,
-
-        "confianza": EmotionEnum.CONFIANZA,
-
-        "gratitud": EmotionEnum.GRATITUD,
-
-        "agotamiento": EmotionEnum.AGOTAMIENTO,
-        "fatiga": EmotionEnum.AGOTAMIENTO,
-        "cansancio": EmotionEnum.AGOTAMIENTO,
-
-        "amor": EmotionEnum.AMOR,
+        **{
+            _key(emotion.value): emotion
+            for emotion in EmotionEnum
+        },
+        **{
+            _key(emotion.label): emotion
+            for emotion in EmotionEnum
+        },
+        **EMOTION_ALIASES,
     }
 
     @classmethod
@@ -82,10 +79,8 @@ class EmotionNormalizer:
         emotion: str,
     ) -> EmotionEnum:
 
-        normalized = emotion.strip().lower()
-
         result = cls._EMOTION_MAP.get(
-            normalized,
+            _key(emotion or ""),
         )
 
         if result is None:
